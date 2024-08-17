@@ -1,0 +1,48 @@
+<form [formGroup]="todoForm" (ngSubmit)="onSubmit()" class="p-fluid">
+  <div class="p-field">
+    <label for="taskType">סוג משימה</label>
+    <p-dropdown id="taskType" formControlName="taskType" [options]="taskTypes" optionValue="id" optionLabel="name" placeholder="בחרו את סוג המשימה"></p-dropdown>
+    <small *ngIf="todoForm.get('taskType')?.invalid && todoForm.get('taskType')?.touched" class="p-error">
+      סוג המשימה הוא שדה חובה.
+    </small>
+  </div>
+
+  <div class="p-field">
+    <label for="name">כותרת</label>
+    <input id="name" formControlName="name" pInputText />
+    <small *ngIf="todoForm.get('name')?.invalid && todoForm.get('name')?.touched" class="p-error">
+      כותרת היא שדה חובה.
+    </small>
+  </div>
+
+  <div class="p-field">
+    <label for="description">תיאור</label>
+    <textarea id="description" formControlName="description" pInputTextarea></textarea>
+  </div>
+
+  <div class="p-field">
+    <label for="startDate">תאריך התחלה</label>
+    <p-calendar id="startDate" formControlName="startDate" dateFormat="dd/mm/yy"></p-calendar>
+    <small *ngIf="todoForm.get('startDate')?.invalid && todoForm.get('startDate')?.touched" class="p-error">
+      התחלה היא שדה חובה.
+    </small>
+  </div>
+
+  <div class="p-field">
+    <label for="dueDate">תאריך סיום</label>
+    <p-calendar id="dueDate" formControlName="dueDate" dateFormat="dd/mm/yy"></p-calendar>
+    <small *ngIf="todoForm.get('dueDate')?.invalid && todoForm.get('dueDate')?.touched" class="p-error">
+      סיום היא שדה חובה.
+    </small>
+  </div>
+
+  <div class="p-field">
+    <label for="isRepeating">משימה מחזורית</label>
+    <p-checkbox id="isRepeating" formControlName="isRepeating" binary="true" onLabel="כן" offLabel="לא"></p-checkbox>
+  </div>
+
+  <div class="p-d-flex p-jc-between">
+    <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="onCancel()"></button>
+    <button pButton type="submit" label="Add Task" class="p-button-primary" [disabled]="todoForm.invalid"></button>
+  </div>
+</form>

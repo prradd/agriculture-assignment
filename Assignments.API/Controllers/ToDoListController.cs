@@ -26,6 +26,12 @@ namespace Assignments.API.Controllers
             return await _context.ToDoItems.Include(t => t.TaskType).ToListAsync();
         }
 
+        [HttpGet("task-types")]
+        public async Task<ActionResult<IEnumerable<TaskType>>> GetTaskTypes()
+        {
+            return await _context.TaskTypes.ToListAsync();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ToDoItem>> GetToDoItem(int id)
         {
@@ -92,8 +98,8 @@ namespace Assignments.API.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}/complete")]
-        public async Task<IActionResult> UpdateCompleteDate(int id)
+        [HttpPut("{id}/toggle-complete")]
+        public async Task<IActionResult> UpdateCompleteDate(int id, [FromBody] bool isComplete)
         {
             var toDoItem = await _context.ToDoItems.FindAsync(id);
             if (toDoItem == null)
@@ -101,7 +107,38 @@ namespace Assignments.API.Controllers
                 return NotFound();
             }
 
-            toDoItem.CompleteDate = DateTime.Now;
+            toDoItem.CompleteDate = isComplete ? DateTime.Now : (DateTime?)null;
+            _context.Entry(toDoItem).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ToDoItemExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}/toggle-archived")]
+        public async Task<IActionResult> UpdateIsArchived(int id, [FromBody] bool isArchived)
+        {
+            var toDoItem = await _context.ToDoItems.FindAsync(id);
+            if (toDoItem == null)
+            {
+                return NotFound();
+            }
+
+            toDoItem.IsArchived = isArchived;
             _context.Entry(toDoItem).State = EntityState.Modified;
 
             try

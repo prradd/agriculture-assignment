@@ -28,6 +28,17 @@ namespace Assignments.API
 
             services.AddHostedService<TaskArchiverHostedService>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +50,8 @@ namespace Assignments.API
             }
 
             //app.usehttpsredirection();
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseRouting();
 

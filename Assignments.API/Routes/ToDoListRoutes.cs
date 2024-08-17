@@ -13,6 +13,11 @@ namespace Assignments.API.Routes
                 defaults: new { controller = "ToDoList", action = "GetToDoItems" });
 
             endpoints.MapControllerRoute(
+                name: "GetAllTaskTypes",
+                pattern: "api/todolist/task-types",
+                defaults: new { controller = "ToDoList", action = "GetTaskTypes" });
+
+            endpoints.MapControllerRoute(
                 name: "GetToDoItem",
                 pattern: "api/todolist/{id:int}",
                 defaults: new { controller = "ToDoList", action = "GetToDoItem" });
@@ -34,8 +39,13 @@ namespace Assignments.API.Routes
 
             endpoints.MapControllerRoute(
                 name: "UpdateCompleteDate",
-                pattern: "api/todolist/{id:int}/complete",
+                pattern: "api/todolist/{id:int}/toggle-complete",
                 defaults: new { controller = "ToDoList", action = "UpdateCompleteDate" });
+
+            endpoints.MapControllerRoute(
+                name: "UpdateIsArchived",
+                pattern: "api/todolist/{id:int}/toggle-archived",
+                defaults: new { controller = "ToDoList", action = "UpdateIsArchived" });
         }
     }
 }
