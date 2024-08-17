@@ -10,7 +10,9 @@ import {CommonModule} from "@angular/common";
 import {TaskType} from "../todoitem";
 import {HttpClient} from "@angular/common/http";
 import {CheckboxModule} from "primeng/checkbox";
+import {environment} from "../../enviroments/enviroment";
 
+const {apiUrl} = environment;
 @Component({
   selector: 'app-add-todo',
   standalone: true,
@@ -47,7 +49,7 @@ export class AddTodoComponent {
   }
 
   fetchTaskTypes(): void {
-    this.http.get<TaskType[]>('https://localhost:44323/api/todolist/task-types')
+    this.http.get<TaskType[]>(`${apiUrl}/todolist/task-types`)
       .subscribe(data => {
         this.taskTypes = data;
       });
@@ -61,7 +63,7 @@ export class AddTodoComponent {
 
     delete(payload.taskType);
 
-    this.http.post('https://localhost:44323/api/todolist', payload)
+    this.http.post(`${apiUrl}/todolist`, payload)
       .subscribe(res => console.log('Response:', res));
 
     this.router.navigate(['/todos']);

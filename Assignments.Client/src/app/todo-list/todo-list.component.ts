@@ -8,6 +8,9 @@ import {Router} from "@angular/router";
 import {ButtonGroupModule} from "primeng/buttongroup";
 import {CheckboxModule} from "primeng/checkbox";
 import {FormsModule} from "@angular/forms";
+import {environment} from "../../enviroments/enviroment";
+
+const {apiUrl} = environment;
 
 @Component({
   selector: 'app-todo-list',
@@ -33,13 +36,8 @@ export class TodoListComponent {
   }
 
   fetchTodos() {
-    this.http.get<TodoItem[]>('https://localhost:44323/api/todolist')
+    this.http.get<TodoItem[]>(`${apiUrl}/todolist`)
       .subscribe(todos => this.todos = todos);
-  }
-
-  completeTask(todo: TodoItem) {
-    this.http.put(`https://localhost:44323/api/todolist/${todo.id}`, todo)
-      .subscribe(() => this.fetchTodos());
   }
 
   goToAddTodo() {
@@ -47,17 +45,17 @@ export class TodoListComponent {
   }
 
   updateTask(todo: TodoItem) {
-    this.http.put(`https://localhost:44323/api/todolist/${todo.id}/toggle-complete`, !!todo.completeDate)
+    this.http.put(`${apiUrl}/todolist/${todo.id}/toggle-complete`, !!todo.completeDate)
       .subscribe(() => this.fetchTodos());
   }
 
   deleteTask(id: number) {
-    this.http.delete(`https://localhost:44323/api/todolist/${id}`)
+    this.http.delete(`${apiUrl}/todolist/${id}`)
       .subscribe(() => this.fetchTodos());
   }
 
   archiveTask(todo: TodoItem) {
-    this.http.put(`https://localhost:44323/api/todolist/${todo.id}/toggle-archived`, !todo.isArchived)
+    this.http.put(`${apiUrl}/todolist/${todo.id}/toggle-archived`, !todo.isArchived)
       .subscribe(() => this.fetchTodos());
   }
 }
