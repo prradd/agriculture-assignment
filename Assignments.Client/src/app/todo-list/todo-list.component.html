@@ -5,7 +5,11 @@
 
   <div class="p-col-12 p-d-flex p-jc-end">
     <div class="p-col-4">
-      <p-button label="הוסף משימה חדשה" icon="pi pi-plus" (onClick)="goToAddTodo()"></p-button>
+      <p-button
+        label="הוסף משימה חדשה"
+        icon="pi pi-plus"
+        (onClick)="goToAddTodo()"
+      ></p-button>
     </div>
   </div>
 
@@ -27,20 +31,50 @@
       </ng-template>
       <ng-template pTemplate="body" let-todo>
         <tr>
-          <td>{{todo.id}}</td>
-          <td>{{todo.taskType.name}}</td>
-          <td>{{todo.name}}</td>
-          <td>{{todo.description}}</td>
-          <td>{{todo.startDate | date: 'dd/MM/yyyy'}}</td>
-          <td>{{todo.dueDate | date: 'dd/MM/yyyy'}}</td>
-          <td [innerHTML]="todo.isRepeating ? '<i class=\'pi pi-check\'></i>' : ''"></td>
-          <td><p-checkbox [(ngModel)]="todo.completeDate" binary="true" [ngModel]="!!todo.completeDate"></p-checkbox></td>
-          <td [innerHTML]="todo.isArchived ? '<i class=\'pi pi-check\'></i>' : ''"></td>
+          <td>{{ todo.id }}</td>
+          <td>{{ todo.taskType.name }}</td>
+          <td>{{ todo.name }}</td>
+          <td>{{ todo.description }}</td>
+          <td>{{ todo.startDate | date: "dd/MM/yyyy" }}</td>
+          <td>{{ todo.dueDate | date: "dd/MM/yyyy" }}</td>
+          <td
+            [innerHTML]="
+              todo.isRepeating ? '<i class=\'pi pi-check\'></i>' : ''
+            "
+          ></td>
           <td>
-            <p-buttonGroup >
-              <p-button outlined size="small" label="עדכן" icon="pi pi-sync" (onClick)="updateTask(todo)"></p-button>
-              <p-button outlined size="small" label="מחק" icon="pi pi-trash" (onClick)="deleteTask(todo.id)"></p-button>
-              <p-button outlined size="small" [label]="todo.isArchived ? 'להחזיר' : 'לארכיון'" icon="pi pi-briefcase" (onClick)="archiveTask(todo)"></p-button>
+            <p-checkbox
+              [(ngModel)]="todo.completeDate"
+              binary="true"
+              [ngModel]="!!todo.completeDate"
+            ></p-checkbox>
+          </td>
+          <td
+            [innerHTML]="todo.isArchived ? '<i class=\'pi pi-check\'></i>' : ''"
+          ></td>
+          <td>
+            <p-buttonGroup>
+              <p-button
+                outlined
+                size="small"
+                label="עדכן"
+                icon="pi pi-sync"
+                (onClick)="updateTask(todo)"
+              ></p-button>
+              <p-button
+                outlined
+                size="small"
+                label="מחק"
+                icon="pi pi-trash"
+                (onClick)="deleteTask(todo.id)"
+              ></p-button>
+              <p-button
+                outlined
+                size="small"
+                [label]="todo.isArchived ? 'להחזיר' : 'לארכיון'"
+                icon="pi pi-briefcase"
+                (onClick)="archiveTask(todo)"
+              ></p-button>
             </p-buttonGroup>
           </td>
         </tr>
@@ -48,5 +82,3 @@
     </p-table>
   </div>
 </div>
-
-

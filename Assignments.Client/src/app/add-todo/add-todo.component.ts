@@ -1,18 +1,23 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {DropdownModule} from "primeng/dropdown";
-import {ButtonModule} from "primeng/button";
-import {CalendarModule} from "primeng/calendar";
-import {InputTextareaModule} from "primeng/inputtextarea";
-import {InputTextModule} from "primeng/inputtext";
-import {CommonModule} from "@angular/common";
-import {TaskType} from "../todoitem";
-import {HttpClient} from "@angular/common/http";
-import {CheckboxModule} from "primeng/checkbox";
-import {environment} from "../../enviroments/enviroment";
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { DropdownModule } from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextModule } from 'primeng/inputtext';
+import { CommonModule } from '@angular/common';
+import { TaskType } from '../todoitem';
+import { HttpClient } from '@angular/common/http';
+import { CheckboxModule } from 'primeng/checkbox';
+import { environment } from '../../enviroments/enviroment';
 
-const {apiUrl} = environment;
+const { apiUrl } = environment;
 @Component({
   selector: 'app-add-todo',
   standalone: true,
@@ -24,16 +29,20 @@ const {apiUrl} = environment;
     DropdownModule,
     ReactiveFormsModule,
     CommonModule,
-    CheckboxModule
+    CheckboxModule,
   ],
   templateUrl: './add-todo.component.html',
-  styleUrl: './add-todo.component.css'
+  styleUrl: './add-todo.component.css',
 })
-export class AddTodoComponent {
-  todoForm: FormGroup;
+export class AddTodoComponent implements OnInit {
+  public todoForm: FormGroup;
   taskTypes: TaskType[] = [];
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router,
+  ) {
     this.todoForm = this.fb.group({
       taskType: ['', Validators.required],
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -49,8 +58,9 @@ export class AddTodoComponent {
   }
 
   fetchTaskTypes(): void {
-    this.http.get<TaskType[]>(`${apiUrl}/todolist/task-types`)
-      .subscribe(data => {
+    this.http
+      .get<TaskType[]>(`${apiUrl}/todolist/task-types`)
+      .subscribe((data) => {
         this.taskTypes = data;
       });
   }
@@ -58,13 +68,14 @@ export class AddTodoComponent {
   onSubmit(): void {
     const payload = {
       taskTypeId: this.todoForm.value.taskType,
-      ...this.todoForm.value
+      ...this.todoForm.value,
     };
 
-    delete(payload.taskType);
+    delete payload.taskType;
 
-    this.http.post(`${apiUrl}/todolist`, payload)
-      .subscribe(res => console.log('Response:', res));
+    this.http
+      .post(`${apiUrl}/todolist`, payload)
+      .subscribe((res) => console.log('Response:', res));
 
     this.router.navigate(['/todos']);
   }
