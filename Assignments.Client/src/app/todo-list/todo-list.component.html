@@ -1,20 +1,15 @@
 <div class="p-grid p-dir-col">
-  <div class="p-col-12 p-d-flex p-jc-between p-ai-center">
+  <div class="p-col-12 p-d-flex p-jc-between p-ai-center page-title">
     <h2>רשימת משימות</h2>
   </div>
 
-  <div class="p-col-12 p-d-flex p-jc-end">
-    <div class="p-col-4">
-      <p-button
-        label="הוסף משימה חדשה"
-        icon="pi pi-plus"
-        (onClick)="goToAddTodo()"
-      ></p-button>
-    </div>
-  </div>
-
-  <div class="p-col-12">
-    <p-table [value]="todos">
+  <div class="table-container">
+    <p-table
+      [value]="todos"
+      styleClass="p-datatable-gridlines"
+      [scrollable]="true"
+      scrollHeight="80vh"
+    >
       <ng-template pTemplate="header">
         <tr>
           <th>מזהה ייחודי</th>
@@ -26,7 +21,14 @@
           <th>מחזורית</th>
           <th>הסתיימה</th>
           <th>בארכיון</th>
-          <th></th>
+          <th>
+            <p-button
+              class="main-button"
+              size="large"
+              label="משימה חדשה"
+              (onClick)="goToAddTodo()"
+            ></p-button>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-todo>
@@ -52,14 +54,14 @@
           <td
             [innerHTML]="todo.isArchived ? '<i class=\'pi pi-check\'></i>' : ''"
           ></td>
-          <td>
-            <p-buttonGroup>
+          <td class="cta-buttons-cell">
+            <p-buttonGroup class="cta-buttons-group">
               <p-button
                 outlined
                 size="small"
-                label="עדכן"
-                icon="pi pi-sync"
-                (onClick)="updateTask(todo)"
+                [label]="todo.isArchived ? 'להחזיר' : 'לארכיון'"
+                icon="pi pi-briefcase"
+                (onClick)="archiveTask(todo)"
               ></p-button>
               <p-button
                 outlined
@@ -71,9 +73,9 @@
               <p-button
                 outlined
                 size="small"
-                [label]="todo.isArchived ? 'להחזיר' : 'לארכיון'"
-                icon="pi pi-briefcase"
-                (onClick)="archiveTask(todo)"
+                label="עדכן"
+                icon="pi pi-sync"
+                (onClick)="updateTask(todo)"
               ></p-button>
             </p-buttonGroup>
           </td>

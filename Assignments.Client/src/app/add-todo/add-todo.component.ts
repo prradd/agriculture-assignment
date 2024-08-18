@@ -16,6 +16,7 @@ import { TaskType } from '../todoitem';
 import { HttpClient } from '@angular/common/http';
 import { CheckboxModule } from 'primeng/checkbox';
 import { environment } from '../../enviroments/enviroment';
+import { ButtonGroupModule } from 'primeng/buttongroup';
 
 const { apiUrl } = environment;
 @Component({
@@ -30,6 +31,7 @@ const { apiUrl } = environment;
     ReactiveFormsModule,
     CommonModule,
     CheckboxModule,
+    ButtonGroupModule,
   ],
   templateUrl: './add-todo.component.html',
   styleUrl: './add-todo.component.css',

@@ -1,0 +1,21 @@
+.add-todo-form-container {
+  padding: 40px;
+  width: 50%;
+  display: grid;
+  row-gap: 16px;
+}
+
+.p-field.checkbox-container {
+  display: flex;
+  gap: 8px;
+}
+
+.cta-buttons-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.p-button {
+  height: 50px;
+}

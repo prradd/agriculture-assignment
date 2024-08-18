@@ -5,3 +5,51 @@
 :root {
   direction: rtl;
 }
+
+.p-datepicker {
+  direction: ltr;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: right;
+  margin-bottom: 20px;
+  margin-right: 40px;
+}
+
+.table-container {
+  padding: 40px;
+}
+
+.add-task-button {
+  float: left;
+  margin-bottom: 20px;
+}
+
+.p-button {
+  font-size: 12px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  direction: ltr;
+}
+
+p-button.main-button .p-button-lg {
+  width: 227px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.cta-buttons-cell {
+  text-align: center;
+  width: 260px;
+}
+td {
+  text-align: center;
+}
+
+.cta-buttons-group {
+  display: flex;
+  justify-content: space-between;
+  direction: ltr;
+}
